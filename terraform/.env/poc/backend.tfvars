@@ -1,0 +1,5 @@
+bucket         = "terraform-remote-backend-agtag-account"
+key            = "ag-spa-starter/state.tfstate"
+region         = "us-east-1"
+encrypt        = "true"
+dynamodb_table = "terraform_state_lock"

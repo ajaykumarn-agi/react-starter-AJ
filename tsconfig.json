@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "jsx": "react",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "noEmit": false,
+        "noImplicitAny": true,
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true
+    },
+
+    "include": [
+        "src/**/*" // *** The files TypeScript should type check ***
+    ],
+    "exclude": ["node_modules", "dist", "public", "scripts"] // *** The files to not type check ***
+}
