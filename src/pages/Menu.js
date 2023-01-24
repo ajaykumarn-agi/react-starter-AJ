@@ -5,10 +5,10 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { General } from "./General";
-import { PublicSource } from "./PublicSource";
+import PublicSource  from "./PublicSources/publicSourceTab"
 import { Tenant } from "./Tenant";
 import { CMS } from "./CMS";
-import { MailServer } from "./MailServer";
+import MailServerTab from "./MailServerTab";
 
 const initialValue = {
   "log.file": {
@@ -123,7 +123,7 @@ export const Menu = () => {
           <PublicSource params={values} />
         </TabPanel>
         <TabPanel value="5">
-          <MailServer />
+          <MailServerTab />
         </TabPanel>
       </TabContext>
     </Box>
