@@ -16,13 +16,13 @@ import {
 
 import { Box, Grid, Typography } from "@mui/material";
 
-export const Tenant = () => {
+export const Tenant = ({ tenants }) => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(false);
   const [loaded, setLoaded] = React.useState(false);
   const [loading, setLoading] = useState(false);
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  const [tenants, setTenants] = useState({});
+  const [tenant, setTenant] = useState({});
   const [parentData, setParentData] = useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(2);
@@ -52,45 +52,6 @@ export const Tenant = () => {
     console.log(tenants);
   };
 
-
-    // { field: "id", headerName: "Tenant ID", minWidth: 130, flex: 1 },
-    // { field: "tenandName", headerName: "Tenant Name", flex: 1 },
-    // { field: "status", headerName: "Status", flex: 1 },
-    // { field: "description", headerName: "Description", flex: 1 },
-    // { field: "dateCreated", headerName: "Date Created", flex: 1 },
-    // { field: "dateModified", headerName: "Date Modified", flex: 1 },
-
-
-  const rows = [
-    {
-      id: tenants.tenantId,
-      tenantName: tenants.name,
-      status: tenants.tenantStatus,
-      description: tenants.description,
-      dateCreated: tenants.createdOn,
-      dateModified: tenants.lastModifiedOn,
-    },
-  ];
-
-  const getTenantList = useCallback(async () => {
-    setError(null);
-    try {
-      const response = await fetch(
-        `http://localhost:8080/agBalance-ConfigTool/servlet/rest/all`
-      );
-      if (!response.ok) {
-        throw new Error("Something went Wrong");
-      }
-      const tenantList = await response.json();
-      setTenants(tenantList);
-    } catch (error) {
-      setError(error.message);
-    }
-  }, []);
-
-  useEffect(() => {
-    getTenantList();
-  }, [getTenantList]);
 
   return (
     <Box
@@ -141,7 +102,6 @@ export const Tenant = () => {
                   <TableCell>Date Modified</TableCell>
                 </TableRow>
               </TableHead>
-
               <TableBody>
                 {Object.entries(tenants).map(([key,row]) => (
                   <TableRow

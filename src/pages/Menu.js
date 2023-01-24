@@ -34,6 +34,7 @@ const initialValue = {
 
 export const Menu = () => {
   const [values, setValues] = React.useState(initialValue);
+  const [tenants, setTenants] = useState({});
   const [tabValue, setTabValue] = React.useState("1");
 
   const [error, setError] = useState(null);
@@ -58,9 +59,28 @@ export const Menu = () => {
     }
   }, []);
 
+
+  // fetched tenant details
+  const fetchTenantList = useCallback(async () => {
+    setError(null);
+    try {
+      const response = await fetch(
+        `http://localhost:8080/agBalance-ConfigTool/servlet/rest/all`
+      );
+      if (!response.ok) {
+        throw new Error("Something went Wrong");
+      }
+      const tenantList = await response.json();
+      setTenants(tenantList);
+    } catch (error) {
+      setError(error.message);
+    }
+  }, []);
+
   useEffect(() => {
     fetchParameters();
-  }, [fetchParameters]);
+    fetchTenantList()
+  }, [fetchParameters, fetchTenantList]);
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -112,7 +132,7 @@ export const Menu = () => {
         </TabPanel>
         <TabPanel value="2">
           {" "}
-          <Tenant />
+          <Tenant tenants={tenants} />
         </TabPanel>
 
         <TabPanel value="3">
