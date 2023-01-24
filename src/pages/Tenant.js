@@ -11,8 +11,9 @@ import {
   TableHead,
   TableContainer,
   TablePagination,
-  Paper
+  Paper,
 } from "@arisglobal/agcp-ui";
+import { Link } from "react-router-dom";
 
 import { Box, Grid, Typography } from "@mui/material";
 
@@ -29,6 +30,10 @@ export const Tenant = ({ tenants }) => {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+  };
+
+  const getStripedStyle = (index) => {
+    return { background: index % 2 ? "#e1e1e1" : "white" };
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -52,7 +57,6 @@ export const Tenant = ({ tenants }) => {
     console.log(tenants);
   };
 
-
   return (
     <Box
       component="form"
@@ -60,6 +64,7 @@ export const Tenant = ({ tenants }) => {
       autoComplete="off"
       className="general-container"
       sx={{ flexGrow: 1 }}
+      position="static"
     >
       <Grid container spacing={3} sx={{ mb: 2, pb: 2 }}>
         <Grid item xs={12} sm={6}>
@@ -85,37 +90,45 @@ export const Tenant = ({ tenants }) => {
             sx={{ textTransform: "capitalize", mb: 1, mx: 1 }}
             onClick={(e) => onSubmitHandler(e)}
           >
-            Close
+           <Link to="/">Close</Link>
           </Button>
         </Grid>
 
         <Grid item xs={12} style={{ height: 500, width: "100%" }}>
           <TableContainer component={Paper}>
-            <Table stickyHeader>
+            <Table stickyHeader aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Tenant ID</TableCell>
-                  <TableCell>Tenant Name</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Date Created</TableCell>
-                  <TableCell>Date Modified</TableCell>
+                  <TableCell className="cellHeader">Tenant ID</TableCell>
+                  <TableCell className="cellHeader">Tenant Name</TableCell>
+                  <TableCell className="cellHeader">Status</TableCell>
+                  <TableCell className="cellHeader">Description</TableCell>
+                  <TableCell className="cellHeader">Date Created</TableCell>
+                  <TableCell className="cellHeader">Date Modified</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                {Object.entries(tenants).map(([key,row]) => (
+              <TableBody >
+                {Object.entries(tenants).map(([key, row]) => (
                   <TableRow
                     key={key}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    style={{
+                      padding: "5px 20px",
+                      height: 25,
+                      ...getStripedStyle(key),
+                    }}
                   >
                     <TableCell component="th" scope="row">
-                      {row.tenantId}
+                      <Link to={{ pathname: "/tenant", state: { row } }}>
+                        {" "}
+                        {row.tenantId}
+                      </Link>
                     </TableCell>
-                    <TableCell >{row.name}</TableCell>
-                    <TableCell >{row.status}</TableCell>
-                    <TableCell >{row.description}</TableCell>
-                    <TableCell >{row.createdOn}</TableCell>
-                    <TableCell >{row.lastModifiedOn}</TableCell>
+                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.status}</TableCell>
+                    <TableCell>{row.description}</TableCell>
+                    <TableCell>{row.createdOn}</TableCell>
+                    <TableCell>{row.lastModifiedOn}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

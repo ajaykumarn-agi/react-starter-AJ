@@ -1,14 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Grid,
-  Typography,
-  Box
-} from "@mui/material";
-import {
-  TextField,
-  Button
-} from "@arisglobal/agcp-ui";
+import { Grid, Typography, Box } from "@mui/material";
+import { TextField, Button } from "@arisglobal/agcp-ui";
+import TextareaAutosize from "@mui/base/TextareaAutosize";
 import "./styles/GeneralStyles.css";
+import constants from "../utils/constants";
 
 const initialValue = {
   "log.file": {
@@ -19,10 +14,10 @@ const initialValue = {
     value: "",
     groupType: 0,
   },
-  "max.log.file.size": { value: "" },
+  "cms.username": { value: "" },
   "cache.maxelement.inmemory": { value: "" },
-  "session.expiration.duration": { value: "" },
-  "doc.types": { value: "" },
+  "cms.password": { value: "" },
+  "cms.remote.workspace": { value: "" },
   "doc.size": { value: "" },
   "cache.global.relativepath": { value: "" },
   "cache.eternal": { value: "" },
@@ -32,31 +27,9 @@ const initialValue = {
   "cache.maxelement.indisk": { value: "" },
 };
 
-export const CMS = () => {
+export const CMS = ({ cmsParams }) => {
   const [error, setError] = useState(null);
-
-  const [values, setValues] = useState(initialValue);
-
-  // fetch Data
-  const fetchGeneralData = useCallback(async () => {
-    setError(null);
-    try {
-      const response = await fetch(
-        "http://localhost:8080/agBalance-ConfigTool/servlet/rest/general"
-      );
-      if (!response.ok) {
-        throw new Error("Something went Wrong");
-      }
-      const generalData = await response.json();
-      setValues(generalData);
-    } catch (error) {
-      setError(error.message);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchGeneralData();
-  }, [fetchGeneralData]);
+  const [values, setValues] = useState(cmsParams);
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -67,27 +40,21 @@ export const CMS = () => {
     });
   };
 
-
-  const changeSelectHandler = (e) =>{
+  const changeSelectHandler = (e) => {
     e.preventDefault();
-    
-  }
+  };
   const onSubmitHandler = (e) => {
     e.preventDefault();
     try {
-      const response = fetch(
-        "http://localhost:8080/agBalance-ConfigTool/servlet/rest/saveParameters",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(values),
-        }
-      );
+      const response = fetch(`${constants.API_URL}/rest/saveParameters`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
       if (error === null) {
-        
       }
     } catch (err) {
       setError(err.message);
@@ -128,8 +95,8 @@ export const CMS = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            name="log.file"
-            value={values["log.file"].value}
+            name="cms.remote.repository"
+            value={values["cms.remote.repository"].value}
             label="Repositary URL"
             fullWidth
             variant="outlined"
@@ -140,8 +107,8 @@ export const CMS = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            name="max.log.file.size"
-            value={values["max.log.file.size"].value}
+            name="cms.username"
+            value={values["cms.username"].value}
             label="User Name"
             fullWidth
             variant="outlined"
@@ -152,10 +119,10 @@ export const CMS = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            name="session.expiration.duration"
+            name="cms.password"
             label="Password"
             fullWidth
-            value={values["session.expiration.duration"].value}
+            value={values["cms.password"].value}
             autoComplete="given-name"
             variant="outlined"
             size="small"
@@ -166,32 +133,23 @@ export const CMS = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            name="doc.types"
+            name="cms.remote.workspace"
             id="outlined-size-small"
             label="Default Workspace Name"
             fullWidth
-            value={values["doc.types"].value}
+            value={values["cms.remote.workspace"].value}
             variant="outlined"
             size="small"
             onChange={handleInputChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            id="firstName outlined-size-small"
-            name="doc.size"
-            label="Configuration"
-            fullWidth
-            value={values["doc.size"].value}
-            autoComplete="given-name"
-            variant="outlined"
-            size="small"
-            onChange={handleInputChange}
-            multiline="true"
-          />
+
+        {/* To Do */}
+        <Grid item xs={12}>
+          <label>Configuration </label>
+          <textarea name="text" rows="15" value={values["2"].template} />
         </Grid>
       </Grid>
-
     </Box>
   );
 };

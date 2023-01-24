@@ -9,13 +9,14 @@ import {
   Tooltip,
   IconButton,
   Avatar,
-  MenuIcon,
 } from "@arisglobal/agcp-ui";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Typography, Toolbar } from "@mui/material";
 
 export const DashBoard = () => {
   return (
-    <AppBar color="primary" position="static">
+    <AppBar position="static" color="primary">
       <Toolbar variant="regular">
         <IconButton
           aria-label="menu"
@@ -25,21 +26,18 @@ export const DashBoard = () => {
           sx={{
             mr: 1,
           }}
-        >
-          <MenuIcon />
-        </IconButton>
+        ></IconButton>
         <Box
           sx={{
             ml: 1,
           }}
         >
-          <img src={logo} alt="logo" />
+          <img src="static/media/Vector.542557f441d498a1f63ff0619777c5f6.svg" />
           <img
-            src={LifeSphere}
+            src="static/media/LifeSphere.5c8631d1a582633084ed2371a7f174a3.svg"
             style={{
               marginLeft: "10px",
             }}
-            alt ="lifeSphere Logo"
           />
         </Box>
         <Typography
@@ -50,7 +48,7 @@ export const DashBoard = () => {
           }}
           variant="h6"
         >
-          App Name
+          Signal & Risk Management
         </Typography>
       </Toolbar>
     </AppBar>

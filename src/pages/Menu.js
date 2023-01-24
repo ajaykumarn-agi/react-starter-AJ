@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react";
+// import {Tab, TabContext, TabList, TabPanel} from '@arisglobal/agcp-ui'
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { General } from "./General";
-import PublicSource  from "./PublicSources/publicSourceTab"
-import { Tenant } from "./Tenant";
-import { CMS } from "./CMS";
-import MailServerTab from "./MailServerTab";
+import  {General}  from "./General";
+import  PublicSource  from "./PublicSource";
+import  {Tenant}  from "./Tenant";
+import  {CMS}  from "./CMS";
+import  MailServer  from "./MailServer";
+import constants from "../utils/constants";
+import TenantTab from "./Tenant/TenantTab";
+import "./styles/GeneralStyles.css";
 
 const initialValue = {
   "log.file": {
@@ -30,13 +34,14 @@ const initialValue = {
   "cache.disk.persistance": { value: "" },
   "cache.overflow.disk": { value: "" },
   "cache.maxelement.indisk": { value: "" },
+  "web.help.base.url": { value: "" },
 };
 
 export const Menu = () => {
-  const [values, setValues] = React.useState(initialValue);
+  const [values, setValues] = useState(initialValue);
+  const [toggle, setToggle] = useState(false);
   const [tenants, setTenants] = useState({});
-  const [tabValue, setTabValue] = React.useState("1");
-
+  const [tabValue, setTabValue] = useState("1");
   const [error, setError] = useState(null);
 
   const handleChange = (event, newValue) => {
@@ -46,9 +51,9 @@ export const Menu = () => {
   const fetchParameters = useCallback(async () => {
     setError(null);
     try {
-      const response = await fetch(
-        "http://localhost:8080/agBalance-ConfigTool/servlet/rest/getParameters"
-      );
+      const response = await fetch(`${constants.API_URL}/rest/getParameters`, {
+        headers: { "Content-Type": "application/json" },
+      });
       if (!response.ok) {
         throw new Error("Something went Wrong");
       }
@@ -59,14 +64,13 @@ export const Menu = () => {
     }
   }, []);
 
-
   // fetched tenant details
   const fetchTenantList = useCallback(async () => {
     setError(null);
     try {
-      const response = await fetch(
-        `http://localhost:8080/agBalance-ConfigTool/servlet/rest/all`
-      );
+      const response = await fetch(`${constants.API_URL}/rest/all`, {
+        headers: { "Content-Type": "application/json" },
+      });
       if (!response.ok) {
         throw new Error("Something went Wrong");
       }
@@ -79,18 +83,8 @@ export const Menu = () => {
 
   useEffect(() => {
     fetchParameters();
-    fetchTenantList()
+    fetchTenantList();
   }, [fetchParameters, fetchTenantList]);
-
-  const handleInputChange = (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: { ...values[name], value: value },
-    });
-  };
-
   return (
     <Box
       sx={{ width: "100%", typography: "body2", textTransform: "capitalize" }}
@@ -132,18 +126,20 @@ export const Menu = () => {
         </TabPanel>
         <TabPanel value="2">
           {" "}
-          <Tenant tenants={tenants} />
+          <Tenant tenants={tenants} setToggle={setToggle} >
+            <TenantTab tenants={tenants} />
+          </Tenant>
+          {/* <TenantTab /> */}
         </TabPanel>
-
         <TabPanel value="3">
-          <CMS />
+          <CMS cmsParams = {values}/>
         </TabPanel>
         <TabPanel value="4">
           {" "}
-          <PublicSource params={values} />
+          <PublicSource props={values} />
         </TabPanel>
         <TabPanel value="5">
-          <MailServerTab />
+          <MailServer mailParams={values} />
         </TabPanel>
       </TabContext>
     </Box>

@@ -5,11 +5,15 @@ import {
   MenuItem,
   Button,
   Alert,
-  Snackbar
+  Container,
+  Paper,
+  FormControlLabel,
+  Checkbox,
+  Snackbar,
 } from "@arisglobal/agcp-ui";
 import "./styles/GeneralStyles.css";
-
-import { FormControl, Box, Grid,  Typography} from "@mui/material";
+import constants from "../utils/constants";
+import { FormControl, Box, Grid, Typography } from "@mui/material";
 const initialValue = {
   "log.file": {
     id: 0,
@@ -40,20 +44,24 @@ const options = [
   },
 ];
 
-export const General = ({ generalData }) => {
+export const General = ({ generalData, setToggle }) => {
   const [values, setValues] = useState(initialValue);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [select, setSelect] = useState("ehcache");
-
   const [isValid, setIsValid] = useState(true);
-  const check = () =>{
-    return values & generalData
-  }
-  useEffect(() => {
-    setValues(generalData);
-    check()
-  }, [generalData], check);
+
+  const check = () => {
+    return values & generalData;
+  };
+  useEffect(
+    () => {
+      setValues(generalData);
+      check();
+    },
+    [generalData],
+    check
+  );
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -63,7 +71,7 @@ export const General = ({ generalData }) => {
       [name]: { ...values[name], value: value },
     });
 
-    setIsValid(false)
+    setIsValid(false);
   };
 
   const changeSelectHandler = (e) => {
@@ -79,22 +87,13 @@ export const General = ({ generalData }) => {
   // Save
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(values);
-    console.log(generalData);
-    if (values === generalData) {
-      console.log("Equal");
-    } else {
-      console.log("Not equal");
-    }
+    console.log(values['web.help.base.url'].value)
     // try {
-    //   const response = await fetch(
-    //     "http://localhost:8080/agBalance-ConfigTool/servlet/rest/saveParameters",
-    //     {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify(values),
-    //     }
-    //   );
+    //   const response = await fetch(`${constants.API_URL}/saveParameters`, {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(values),
+    //   });
     //   if (!response.ok) {
     //     throw new Error(response.statusText);
     //   }
@@ -104,6 +103,7 @@ export const General = ({ generalData }) => {
     // } catch (err) {
     //   setError(err.message);
     // }
+    // setToggle((prev) => !prev);
   };
 
   const handleClose = (event, reason) => {
@@ -185,11 +185,23 @@ export const General = ({ generalData }) => {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            name="doc.types"
-            id="outlined-size-small"
-            label="Document Types"
+            name="web.help.base.url"
+            value='hello'
+            label="Web Help Base URL"
             fullWidth
-            value={values["doc.types"].value}
+            variant="outlined"
+            size="small"
+            onChange={handleInputChange}
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="outlined-size-small"
+            name="doc.size"
+            label="Document Size(MB)"
+            fullWidth
+            value={values["doc.size"].value}
             autoComplete="given-name"
             variant="outlined"
             size="small"
@@ -198,11 +210,12 @@ export const General = ({ generalData }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="firstName outlined-size-small"
-            name="doc.size"
-            label="Document Size(MB)"
+            required
+            name="doc.types"
+            id="outlined-size-small"
+            label="Document Types"
             fullWidth
-            value={values["doc.size"].value}
+            value={values["doc.types"].value}
             autoComplete="given-name"
             variant="outlined"
             size="small"

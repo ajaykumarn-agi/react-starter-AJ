@@ -7,6 +7,8 @@ import {
   Snackbar,
 } from "@arisglobal/agcp-ui";
 
+import constants from "../utils/constants";
+
 import {
   Box,
   Grid,
@@ -15,8 +17,7 @@ import {
   FormGroup,
 } from "@mui/material";
 
-
-const MailServerTab = () => {
+const MailServer = ({ mailParams }) => {
   const initialValue = {
     "notify.user.id": { value: "" },
     "notify.from.pwd": { value: "" },
@@ -29,32 +30,31 @@ const MailServerTab = () => {
   };
 
   const [error, setError] = useState(null);
-  const [values, setValues] = useState(initialValue);
+  const [values, setValues] = useState(mailParams);
   const [open, setOpen] = useState(false);
 
-  const fetchGeneralData = useCallback(async () => {
-    setError(null);
-    try {
-      const response = await fetch(
-        "http://localhost:8080/agBalance-ConfigTool/servlet/rest/tabdetails"
-      );
-      if (!response.ok) {
-        throw new Error("Something went Wrong");
-      }
-      const generalData = await response.json();
-      setValues(generalData);
-    } catch (error) {
-      setError(error.message);
-    }
-  }, []);
+  // const fetchGeneralData = useCallback(async () => {
+  //   setError(null);
+  //   try {
+  //     const response = await fetch(
+  //       "http://localhost:8080/agBalance-ConfigTool/servlet/rest/tabdetails"
+  //     );
+  //     if (!response.ok) {
+  //       throw new Error("Something went Wrong");
+  //     }
+  //     const generalData = await response.json();
+  //     setValues(generalData);
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    fetchGeneralData();
-  }, [fetchGeneralData]);
+  // useEffect(() => {
+  //   fetchGeneralData();
+  // }, [fetchGeneralData]);
 
   const handleInputChange = (e) => {
     e.preventDefault();
-
     if (e.target.type === "checkbox") {
       e.target.value = e.target.checked;
       const { name, checked } = e.target;
@@ -68,14 +68,11 @@ const MailServerTab = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        "http://localhost:8080/agBalance-ConfigTool/servlet/rest/saveParameters",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(values),
-        }
-      );
+      const response = await fetch(`${constants.API_URL}/saveParameters`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -96,12 +93,12 @@ const MailServerTab = () => {
 
   return (
     <Box
-    component="form"
-    noValidate
-    autoComplete="off"
-    className="general-container"
-    sx={{ flexGrow: 1 }}
-  >
+      component="form"
+      noValidate
+      autoComplete="off"
+      className="general-container"
+      sx={{ flexGrow: 1 }}
+    >
       <Grid container spacing={3} sx={{ mb: 2, pb: 2 }}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom>
@@ -199,6 +196,9 @@ const MailServerTab = () => {
             onChange={handleInputChange}
           />
         </Grid>
+
+
+        {/* TO do  */}
         <Grid item xs={12} sm={6}>
           <FormGroup>
             <FormControlLabel
@@ -250,4 +250,4 @@ const MailServerTab = () => {
     </Box>
   );
 };
-export default MailServerTab;
+export default MailServer;
