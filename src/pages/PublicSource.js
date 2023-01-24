@@ -1,15 +1,20 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Grid, Typography, Box } from "@mui/material";
-import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import MongoConfig from "./PublicSources/mongoConfig";
 import DataConfig from "./PublicSources/dataConfig";
-import {Button, ButtonGroup,Snackbar, Alert } from "@arisglobal/agcp-ui";
+import {
+  Button,
+  ButtonGroup,
+  Snackbar,
+  MenuIconsComponent,
+  Alert,
+  Tabs,
+  Tab,
+} from "@arisglobal/agcp-ui";
 import constants from "../utils/constants";
-
-
 
 const PublicSource = ({ props }) => {
   const [value, setValue] = React.useState("1");

@@ -14,8 +14,9 @@ import {
 import '../styles/GeneralStyles.css';
 import {FormControl, Box, Grid, Typography} from '@mui/material';
 
-const DBDetailsTab = props => {
+const DBDetailsTab = ({props}) => {
   const [open, setOpen] = useState (false);
+  const[values, setValues] = useState(props)
   const [select, setSelect] = useState ('0');
 
   const handleClose = (event, reason) => {
@@ -27,6 +28,12 @@ const DBDetailsTab = props => {
 
   const handleInputChange = e => {
     e.preventDefault ();
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: { ...values[name], value: value },
+    });
+
   };
 
   const changeSelectHandler = e => {
@@ -34,7 +41,13 @@ const DBDetailsTab = props => {
   };
   const onSubmitHandler = async e => {
     e.preventDefault ();
+
+    console.log(props)
+    console.log(values)
   };
+
+
+
 
   return (
     <Box
@@ -44,6 +57,7 @@ const DBDetailsTab = props => {
       className="general-container"
       sx={{flexGrow: 1}}
     >
+    <Button onClick={onSubmitHandler}>Submit</Button>
       <Grid container spacing={3} sx={{mb: 2, pb: 2}}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom>
@@ -62,8 +76,8 @@ const DBDetailsTab = props => {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            name="msHost"
-            // value={values['Host'].value}
+            name="Host"
+            // value={values['Host']?.value}
             label="Host"
             fullWidth
             variant="outlined"
@@ -87,7 +101,7 @@ const DBDetailsTab = props => {
           <TextField
             required
             name="msUserName"
-            id="outlined-size-small"
+           
             label="User Name"
             fullWidth
             // value={values['UserName'].value}
@@ -102,7 +116,7 @@ const DBDetailsTab = props => {
           <TextField
             required
             name="msPassword"
-            id="outlined-size-small"
+           
             label="Password"
             type="password"
             fullWidth
@@ -115,7 +129,7 @@ const DBDetailsTab = props => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="firstName outlined-size-small"
+          
             name="msSchemaName"
             label="Schema Name"
             fullWidth
@@ -171,7 +185,7 @@ const DBDetailsTab = props => {
           <TextField
             required
             name="csUserName"
-            id="outlined-size-small"
+           
             label="User Name"
             fullWidth
             // value={values['UserName'].value}
@@ -186,7 +200,7 @@ const DBDetailsTab = props => {
           <TextField
             required
             name="csPassword"
-            id="outlined-size-small"
+           
             label="Password"
             fullWidth
             // value={values['UserName'].value}
@@ -199,7 +213,7 @@ const DBDetailsTab = props => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="firstName outlined-size-small"
+          
             name="csSchemaName"
             label="Schema Name"
             fullWidth
@@ -255,7 +269,7 @@ const DBDetailsTab = props => {
           <TextField
             required
             name="mlUserName"
-            id="outlined-size-small"
+           
             label="User Name"
             fullWidth
             // value={values['UserName'].value}
@@ -270,7 +284,7 @@ const DBDetailsTab = props => {
           <TextField
             required
             name="mlPassword"
-            id="outlined-size-small"
+           
             label="Password"
             fullWidth
             // value={values['UserName'].value}
@@ -283,7 +297,7 @@ const DBDetailsTab = props => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="firstName outlined-size-small"
+          
             name="mlSchemaName"
             label="Schema Name"
             fullWidth
@@ -338,7 +352,7 @@ const DBDetailsTab = props => {
           <TextField
             required
             name="studyUserName"
-            id="outlined-size-small"
+           
             label="User Name"
             fullWidth
             // value={values['UserName'].value}
@@ -353,7 +367,7 @@ const DBDetailsTab = props => {
           <TextField
             required
             name="studyPassword"
-            id="outlined-size-small"
+           
             label="Password"
             type="password"
             fullWidth
@@ -366,7 +380,7 @@ const DBDetailsTab = props => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="firstName outlined-size-small"
+          
             name="studySchemaName"
             label="Schema Name"
             fullWidth

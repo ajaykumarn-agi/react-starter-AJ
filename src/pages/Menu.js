@@ -5,11 +5,11 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import  {General}  from "./General";
-import  PublicSource  from "./PublicSource";
-import  {Tenant}  from "./Tenant";
-import  {CMS}  from "./CMS";
-import  MailServer  from "./MailServer";
+import { General } from "./General";
+import PublicSource from "./PublicSource";
+import { Tenant } from "./Tenant";
+import { CMS } from "./CMS";
+import MailServer from "./MailServer";
 import constants from "../utils/constants";
 import TenantTab from "./Tenant/TenantTab";
 import "./styles/GeneralStyles.css";
@@ -69,13 +69,14 @@ export const Menu = () => {
     setError(null);
     try {
       const response = await fetch(`${constants.API_URL}/rest/all`, {
+        mode:'cors',
         headers: { "Content-Type": "application/json" },
       });
       if (!response.ok) {
         throw new Error("Something went Wrong");
       }
-      const tenantList = await response.json();
-      setTenants(tenantList);
+      const generalData = await response.json();
+      setValues(generalData);
     } catch (error) {
       setError(error.message);
     }
@@ -83,8 +84,11 @@ export const Menu = () => {
 
   useEffect(() => {
     fetchParameters();
+  }, [fetchParameters]);
+
+  useEffect(() => {
     fetchTenantList();
-  }, [fetchParameters, fetchTenantList]);
+  }, [fetchTenantList]);
   return (
     <Box
       sx={{ width: "100%", typography: "body2", textTransform: "capitalize" }}
@@ -126,13 +130,13 @@ export const Menu = () => {
         </TabPanel>
         <TabPanel value="2">
           {" "}
-          <Tenant tenants={tenants} setToggle={setToggle} >
+          <Tenant tenants={tenants} setToggle={setToggle}>
             <TenantTab tenants={tenants} />
           </Tenant>
           {/* <TenantTab /> */}
         </TabPanel>
         <TabPanel value="3">
-          <CMS cmsParams = {values}/>
+          <CMS cmsParams={values} />
         </TabPanel>
         <TabPanel value="4">
           {" "}

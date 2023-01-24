@@ -19,7 +19,8 @@ const App = () => {
       {/* <DashBoard /> */}
       <ThemeProvider theme={THEME}>
         <Routes>
-          <Route path="/" element={<Menu />} />
+          <Route path="/" element={<Menu />}/>
+          <Route path="/tenant" element={<TenantTab />}/>
           
         </Routes>
       </ThemeProvider>

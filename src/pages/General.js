@@ -5,36 +5,11 @@ import {
   MenuItem,
   Button,
   Alert,
-  Container,
-  Paper,
-  FormControlLabel,
-  Checkbox,
   Snackbar,
 } from "@arisglobal/agcp-ui";
 import "./styles/GeneralStyles.css";
 import constants from "../utils/constants";
 import { FormControl, Box, Grid, Typography } from "@mui/material";
-const initialValue = {
-  "log.file": {
-    id: 0,
-    name: "",
-    type: 0,
-    paramId: "",
-    value: "",
-    groupType: 0,
-  },
-  "max.log.file.size": { value: "" },
-  "cache.maxelement.inmemory": { value: "" },
-  "session.expiration.duration": { value: "" },
-  "doc.types": { value: "" },
-  "doc.size": { value: "" },
-  "cache.global.relativepath": { value: "" },
-  "cache.eternal": { value: "" },
-  "cache.type": { value: "" },
-  "cache.disk.persistance": { value: "" },
-  "cache.overflow.disk": { value: "" },
-  "cache.maxelement.indisk": { value: "" },
-};
 
 const options = [
   { value: "ehcache", label: "EH Cache" },
@@ -45,11 +20,12 @@ const options = [
 ];
 
 export const General = ({ generalData, setToggle }) => {
-  const [values, setValues] = useState(initialValue);
+  const [values, setValues] = useState(generalData);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [select, setSelect] = useState("ehcache");
   const [isValid, setIsValid] = useState(true);
+ 
 
   const check = () => {
     return values & generalData;
@@ -83,27 +59,23 @@ export const General = ({ generalData, setToggle }) => {
       ["cache.type"]: { ...values["cache.type"], value: e.target.value },
     });
   };
-
-  // Save
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(values['web.help.base.url'].value)
-    // try {
-    //   const response = await fetch(`${constants.API_URL}/saveParameters`, {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(values),
-    //   });
-    //   if (!response.ok) {
-    //     throw new Error(response.statusText);
-    //   }
-    //   if (error === null) {
-    //     setOpen(true);
-    //   }
-    // } catch (err) {
-    //   setError(err.message);
-    // }
-    // setToggle((prev) => !prev);
+    try {
+      const response = await fetch(`${constants.API_URL}/rest/saveParameters`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      if (error === null) {
+        setOpen(true);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const handleClose = (event, reason) => {
@@ -186,12 +158,12 @@ export const General = ({ generalData, setToggle }) => {
           <TextField
             required
             name="web.help.base.url"
-            value='hello'
+            value={values['web.help.base.url']?.value}
             label="Web Help Base URL"
             fullWidth
             variant="outlined"
             size="small"
-            onChange={handleInputChange}
+           
           />
         </Grid>
 

@@ -126,7 +126,6 @@ const DefaultTab = props => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            id="firstName outlined-size-small"
             label="Description"
             name="description"
             fullWidth

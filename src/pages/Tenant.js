@@ -119,7 +119,7 @@ export const Tenant = ({ tenants }) => {
                     }}
                   >
                     <TableCell component="th" scope="row">
-                      <Link to={{ pathname: "/tenant", state: { row } }}>
+                      <Link to={{ pathname: "/tenant", state: tenants }}>
                         {" "}
                         {row.tenantId}
                       </Link>

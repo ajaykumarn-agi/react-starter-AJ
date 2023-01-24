@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Grid, Typography, Box } from "@mui/material";
 import { TextField, Button } from "@arisglobal/agcp-ui";
-import TextareaAutosize from "@mui/base/TextareaAutosize";
 import "./styles/GeneralStyles.css";
 import constants from "../utils/constants";
 
@@ -48,6 +47,7 @@ export const CMS = ({ cmsParams }) => {
     try {
       const response = fetch(`${constants.API_URL}/rest/saveParameters`, {
         method: "POST",
+        mode:'no-cors',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
@@ -147,7 +147,7 @@ export const CMS = ({ cmsParams }) => {
         {/* To Do */}
         <Grid item xs={12}>
           <label>Configuration </label>
-          <textarea name="text" rows="15" value={values["2"].template} />
+          <textarea name="text" rows="15"  />
         </Grid>
       </Grid>
     </Box>
