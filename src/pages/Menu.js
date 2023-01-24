@@ -14,7 +14,7 @@ import constants from "../utils/constants";
 import TenantTab from "./Tenant/TenantTab";
 import "./styles/GeneralStyles.css";
 
-const initialValue = {
+let initialValue = {
   "log.file": {
     id: 0,
     name: "",
@@ -69,14 +69,13 @@ export const Menu = () => {
     setError(null);
     try {
       const response = await fetch(`${constants.API_URL}/rest/all`, {
-        mode:'cors',
         headers: { "Content-Type": "application/json" },
       });
       if (!response.ok) {
         throw new Error("Something went Wrong");
       }
-      const generalData = await response.json();
-      setValues(generalData);
+      const tenantData = await response.json();
+      setTenants(tenantData)
     } catch (error) {
       setError(error.message);
     }
@@ -84,11 +83,9 @@ export const Menu = () => {
 
   useEffect(() => {
     fetchParameters();
-  }, [fetchParameters]);
+    fetchTenantList()
+  }, [fetchParameters, fetchTenantList]);
 
-  useEffect(() => {
-    fetchTenantList();
-  }, [fetchTenantList]);
   return (
     <Box
       sx={{ width: "100%", typography: "body2", textTransform: "capitalize" }}
