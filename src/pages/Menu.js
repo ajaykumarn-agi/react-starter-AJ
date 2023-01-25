@@ -39,8 +39,9 @@ let initialValue = {
 
 export const Menu = () => {
   const [values, setValues] = useState(initialValue);
+  const [loading, setLoading] = useState(true);
   const [toggle, setToggle] = useState(false);
-  const [tenants, setTenants] = useState({});
+  
   const [tabValue, setTabValue] = useState("1");
   const [error, setError] = useState(null);
 
@@ -50,6 +51,7 @@ export const Menu = () => {
 
   const fetchParameters = useCallback(async () => {
     setError(null);
+
     try {
       const response = await fetch(`${constants.API_URL}/rest/getParameters`, {
         headers: { "Content-Type": "application/json" },
@@ -59,90 +61,85 @@ export const Menu = () => {
       }
       const generalData = await response.json();
       setValues(generalData);
+      setLoading(false);
     } catch (error) {
       setError(error.message);
-    }
-  }, []);
-
-  // fetched tenant details
-  const fetchTenantList = useCallback(async () => {
-    setError(null);
-    try {
-      const response = await fetch(`${constants.API_URL}/rest/all`, {
-        headers: { "Content-Type": "application/json" },
-      });
-      if (!response.ok) {
-        throw new Error("Something went Wrong");
-      }
-      const tenantData = await response.json();
-      setTenants(tenantData)
-    } catch (error) {
-      setError(error.message);
+      setLoading(false);
     }
   }, []);
 
   useEffect(() => {
     fetchParameters();
-    fetchTenantList()
-  }, [fetchParameters, fetchTenantList]);
+    
+  }, [fetchParameters]);
 
-  return (
-    <Box
-      sx={{ width: "100%", typography: "body2", textTransform: "capitalize" }}
-    >
-      <TabContext value={tabValue}>
-        <Box
-          sx={{
-            borderBottom: 0,
-            borderColor: "divider",
-            textTransform: "lowercase",
-          }}
-        >
-          <TabList onChange={handleChange} sx={{ textTransform: "capitalize" }}>
-            <Tab
-              label="General"
-              value="1"
+  if (loading) {
+    return <p> Loading... </p>;
+  }
+  if (error) {
+    return <p>{error.message}</p>;
+  } else {
+    return (
+      <Box
+        sx={{ width: "100%", typography: "body2", textTransform: "capitalize" }}
+      >
+        <TabContext value={tabValue}>
+          <Box
+            sx={{
+              borderBottom: 0,
+              borderColor: "divider",
+              textTransform: "lowercase",
+            }}
+          >
+            <TabList
+              onChange={handleChange}
               sx={{ textTransform: "capitalize" }}
-            />
-            <Tab
-              label="Tenant"
-              value="2"
-              sx={{ textTransform: "capitalize" }}
-            />
-            <Tab label="CMS" value="3" sx={{ textTransform: "capitalize" }} />
-            <Tab
-              label="Public Source"
-              value="4"
-              sx={{ textTransform: "capitalize" }}
-            />
-            <Tab
-              label="Mail Server"
-              value="5"
-              sx={{ textTransform: "capitalize" }}
-            />
-          </TabList>
-        </Box>
-        <TabPanel value="1">
-          <General generalData={values} />
-        </TabPanel>
-        <TabPanel value="2">
-          {" "}
-          <Tenant tenants={tenants} setToggle={setToggle}>
-            <TenantTab tenants={tenants} />
-          </Tenant>
-          {/* <TenantTab /> */}
-        </TabPanel>
-        <TabPanel value="3">
-          <CMS cmsParams={values} />
-        </TabPanel>
-        <TabPanel value="4">
-          {" "}
-          <PublicSource props={values} />
-        </TabPanel>
-        <TabPanel value="5">
-          <MailServer mailParams={values} />
-        </TabPanel>
-      </TabContext>
-    </Box>
-  );
+            >
+              <Tab
+                label="General"
+                value="1"
+                sx={{ textTransform: "capitalize" }}
+              />
+              <Tab
+                label="Tenant"
+                value="2"
+                sx={{ textTransform: "capitalize" }}
+              />
+              <Tab label="CMS" value="3" sx={{ textTransform: "capitalize" }} />
+              <Tab
+                label="Public Source"
+                value="4"
+                sx={{ textTransform: "capitalize" }}
+              />
+              <Tab
+                label="Mail Server"
+                value="5"
+                sx={{ textTransform: "capitalize" }}
+              />
+            </TabList>
+          </Box>
+          <TabPanel value="1">
+            <General generalData={values} />
+          </TabPanel>
+          <TabPanel value="2">
+            {" "}
+            <Tenant >
+              <TenantTab  />
+            </Tenant>
+            {/* <TenantTab /> */}
+          </TabPanel>
+          <TabPanel value="3">
+            <CMS cmsParams={values} />
+          </TabPanel>
+          <TabPanel value="4">
+            {" "}
+            <PublicSource props={values} />
+          </TabPanel>
+          <TabPanel value="5">
+            <MailServer mailParams={values} />
+          </TabPanel>
+        </TabContext>
+      </Box>
+    );
+  }
 };
