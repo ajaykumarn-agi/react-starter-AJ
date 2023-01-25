@@ -27,7 +27,7 @@ export const Tenant = () => {
   const [tenants, setTenants] = useState({});
   const [parentData, setParentData] = useState({});
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(0);
 
   // fetched tenant details
   const fetchTenantList = useCallback(async () => {
@@ -49,9 +49,9 @@ export const Tenant = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   fetchTenantList();
-  // }, [fetchTenantList]);
+  useEffect(() => {
+    fetchTenantList();
+  }, [fetchTenantList]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -62,7 +62,7 @@ export const Tenant = () => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 1));
     setPage(0);
   };
 
@@ -81,7 +81,7 @@ export const Tenant = () => {
     e.preventDefault();
     console.log(tenants);
   };
-  if (!loading) {
+  if (loading) {
     return <p> Loading... </p>;
   }
   if (error) {
@@ -113,7 +113,7 @@ export const Tenant = () => {
               sx={{ textTransform: "capitalize", mb: 1, mx: 1 }}
               onClick={(e) => onSubmitHandler(e)}
             >
-              Create
+              <Link to="/tenant">Create</Link>
             </Button>
             <Button
               variant="outlined"

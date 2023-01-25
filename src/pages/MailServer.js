@@ -5,6 +5,7 @@ import {
   Alert,
   Checkbox,
   Snackbar,
+  LoadingButton,
 } from "@arisglobal/agcp-ui";
 
 import constants from "../utils/constants";
@@ -18,40 +19,10 @@ import {
 } from "@mui/material";
 
 const MailServer = ({ mailParams }) => {
-  const initialValue = {
-    "notify.user.id": { value: "" },
-    "notify.from.pwd": { value: "" },
-    "notify.from.id": { value: "" },
-    "mail.smtp.socketFactory.port": { value: "" },
-    "sender.host": { value: "" },
-    "sender.port": { value: "" },
-    "mail.smtp.auth": { value: "" },
-    "mail.smtp.starttls.enable": { value: "" },
-  };
-
   const [error, setError] = useState(null);
   const [values, setValues] = useState(mailParams);
   const [open, setOpen] = useState(false);
-
-  // const fetchGeneralData = useCallback(async () => {
-  //   setError(null);
-  //   try {
-  //     const response = await fetch(
-  //       "http://localhost:8080/agBalance-ConfigTool/servlet/rest/tabdetails"
-  //     );
-  //     if (!response.ok) {
-  //       throw new Error("Something went Wrong");
-  //     }
-  //     const generalData = await response.json();
-  //     setValues(generalData);
-  //   } catch (error) {
-  //     setError(error.message);
-  //   }
-  // }, []?);
-
-  // useEffect(() => {
-  //   fetchGeneralData();
-  // }, [fetchGeneralData]?);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -67,6 +38,8 @@ const MailServer = ({ mailParams }) => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    setError(null);
+    setIsLoading(true);
     try {
       const response = await fetch(`${constants.API_URL}/saveParameters`, {
         method: "POST",
@@ -78,6 +51,7 @@ const MailServer = ({ mailParams }) => {
       }
       if (error === null) {
         setOpen(true);
+        setIsLoading(false);
       }
     } catch (err) {
       setError(err.message);
@@ -113,13 +87,14 @@ const MailServer = ({ mailParams }) => {
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          <Button
+          <LoadingButton
+            loading={isLoading}
             variant="contained"
             sx={{ textTransform: "capitalize", mb: 1 }}
             onClick={(e) => onSubmitHandler(e)}
           >
             Save
-          </Button>
+          </LoadingButton>
         </Grid>
 
         <Grid item xs={12} sm={6}>
@@ -197,7 +172,6 @@ const MailServer = ({ mailParams }) => {
           />
         </Grid>
 
-
         {/* TO do  */}
         <Grid item xs={12} sm={6}>
           <FormGroup>
@@ -220,7 +194,9 @@ const MailServer = ({ mailParams }) => {
               control={
                 <Checkbox
                   color="primary"
-                  checked={values["mail.smtp.starttls.enable"]?.value === "true"}
+                  checked={
+                    values["mail.smtp.starttls.enable"]?.value === "true"
+                  }
                   name="mail.smtp.starttls.enable"
                   onClick={handleInputChange}
                   size="medium"

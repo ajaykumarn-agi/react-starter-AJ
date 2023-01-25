@@ -13,17 +13,20 @@ import {
   Alert,
   Tabs,
   Tab,
+  LoadingButton,
 } from "@arisglobal/agcp-ui";
 import constants from "../utils/constants";
 
 const PublicSource = ({ props }) => {
   const [value, setValue] = React.useState("1");
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState(props);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -52,6 +55,7 @@ const PublicSource = ({ props }) => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
     try {
       const response = await fetch(`${constants.API_URL}/rest/saveParameters`, {
         method: "POST",
@@ -63,6 +67,7 @@ const PublicSource = ({ props }) => {
       }
       if (error === null) {
         setOpen(true);
+        setIsLoading(false);
       }
     } catch (err) {
       setError(err.message);
@@ -77,23 +82,47 @@ const PublicSource = ({ props }) => {
       className="general-container"
       sx={{ flexGrow: 1 }}
     >
-      <Grid item xs={12} sm={6}>
-        <Typography variant="h6" gutterBottom>
-          Public Source
-        </Typography>
-      </Grid>
-      <div id="button">
-        <ButtonGroup
-          variant="contained"
-          aria-label="outlined primary button group"
-          sx={{}}
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="h6" gutterBottom>
+            Public Source
+          </Typography>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="flex-end"
         >
-          <Button onClick={onSubmitHandler}>Save</Button>
+          <LoadingButton
+            loading={isLoading}
+            variant="contained"
+            sx={{ textTransform: "capitalize", mx: 1 }}
+            onClick={(e) => onSubmitHandler(e)}
+          >
+            Save
+          </LoadingButton>
 
-          <Button variant="outlined">Close</Button>
-        </ButtonGroup>
-      </div>
+          <LoadingButton
+            variant="outlined"
+            sx={{ textTransform: "capitalize" }}
+          >
+            Close
+          </LoadingButton>
+          {/* <div id="button">
+            <ButtonGroup
+              variant="contained"
+              aria-label="outlined primary button group"
+            >
+              <Button onClick={onSubmitHandler}>Save</Button>
 
+              <Button variant="outlined">Close</Button>
+            </ButtonGroup>
+          </div> */}
+        </Grid>
+      </Grid>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} aria-label="public source tab">

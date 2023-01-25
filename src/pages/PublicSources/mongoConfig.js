@@ -1,26 +1,21 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
+import { Box, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import CardContent from "@mui/material/CardContent";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Checkbox } from "@arisglobal/agcp-ui";
+import { GeneratedIdentifierFlags } from "typescript";
 
 const MongoConfig = (props) => {
-  
   const handleChange = (event) => {
     props.parentMethod(event);
   };
 
   return (
-    <Box
-      component="form"
-      sx={{ "& .MuiTextField-root": { m: 3, width: "55ch" } }}
-      noValidate
-      autoComplete="off"
-    >
-      <CardContent>
-        <div>
+    <Box component="form" noValidate autoComplete="off" sx={{ flexGrow: 1 }}>
+      <Grid container spacing={3} sx={{ mb: 2, pb: 2 }}>
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -29,11 +24,12 @@ const MongoConfig = (props) => {
             onChange={handleChange}
             value={props.publicDbData["mongo.host"]?.value}
             required
-            rows={1}
             size="small"
-            type="text"
             variant="outlined"
           />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -42,13 +38,12 @@ const MongoConfig = (props) => {
             onChange={handleChange}
             required
             value={props.publicDbData["mongo.secondary.host"]?.value}
-            rows={1}
             size="small"
-            type="text"
             variant="outlined"
           />
-        </div>
-        <div>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -57,11 +52,11 @@ const MongoConfig = (props) => {
             value={props.publicDbData["mongo.port"]?.value}
             onChange={handleChange}
             required
-            rows={1}
             size="small"
-            type="text"
             variant="outlined"
           />
+        </Grid>
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -70,14 +65,12 @@ const MongoConfig = (props) => {
             value={props.publicDbData["mongo.username"]?.value}
             onChange={handleChange}
             required
-            rows={1}
             size="small"
-            type="text"
             variant="outlined"
           />
-        </div>
+        </Grid>
 
-        <div>
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -86,11 +79,13 @@ const MongoConfig = (props) => {
             name="mongo.password"
             value={props.publicDbData["mongo.password"]?.value}
             required
-            rows={1}
             size="small"
             type="password"
             variant="outlined"
           />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -99,13 +94,13 @@ const MongoConfig = (props) => {
             value={props.publicDbData["mongo.batch.size"]?.value}
             onChange={handleChange}
             required
-            rows={1}
             size="small"
             type="number"
             variant="outlined"
           />
-        </div>
-        <div>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -114,11 +109,11 @@ const MongoConfig = (props) => {
             name="mongo.dbname.1002"
             value={props.publicDbData["mongo.dbname.1002"]?.value}
             required
-            rows={1}
             size="small"
-            type="text"
             variant="outlined"
           />
+        </Grid>
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -127,13 +122,12 @@ const MongoConfig = (props) => {
             name="prodrole.suspect"
             value={props.publicDbData["prodrole.suspect"]?.value}
             required
-            rows={1}
             size="small"
-            type="text"
             variant="outlined"
           />
-        </div>
-        <div>
+        </Grid>
+
+        <Grid item xs={12}>
           <FormGroup aria-label="position" row>
             <FormControlLabel
               value="start"
@@ -160,9 +154,9 @@ const MongoConfig = (props) => {
               labelPlacement="start"
             />
           </FormGroup>
-        </div>
+        </Grid>
 
-        <div>
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -171,11 +165,12 @@ const MongoConfig = (props) => {
             name="mongo.dbname.1023"
             value={props.publicDbData["mongo.dbname.1023"]?.value}
             required
-            rows={1}
             size="small"
-            type="text"
             variant="outlined"
           />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -184,13 +179,11 @@ const MongoConfig = (props) => {
             name="mongo.dbname.1003"
             value={props.publicDbData["mongo.dbname.1003"]?.value}
             required
-            rows={1}
             size="small"
-            type="text"
             variant="outlined"
           />
-        </div>
-        <div>
+        </Grid>
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -199,11 +192,12 @@ const MongoConfig = (props) => {
             required
             name="mongo.dbname.1143"
             value={props.publicDbData["mongo.dbname.1143"]?.value}
-            rows={1}
             size="small"
-            type="text"
             variant="outlined"
           />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -212,13 +206,11 @@ const MongoConfig = (props) => {
             name="vigibase.prodrole.suspect"
             value={props.publicDbData["vigibase.prodrole.suspect"]?.value}
             required
-            rows={1}
             size="small"
-            type="text"
             variant="outlined"
           />
-        </div>
-        <div>
+        </Grid>
+        <Grid item xs={12}>
           <FormGroup aria-label="position" row>
             <FormControlLabel
               control={
@@ -247,8 +239,9 @@ const MongoConfig = (props) => {
               labelPlacement="start"
             />
           </FormGroup>
-        </div>
-        <div>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -257,13 +250,11 @@ const MongoConfig = (props) => {
             name="mongo.dbname.1077"
             value={props.publicDbData["mongo.dbname.1077"]?.value}
             required
-            rows={1}
             size="small"
-            type="text"
             variant="outlined"
           />
-        </div>
-      </CardContent>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

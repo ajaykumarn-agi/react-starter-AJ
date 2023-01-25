@@ -1,5 +1,5 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
+import { Box, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -10,15 +10,13 @@ const DataConfig = (props) => {
   };
 
   return (
-    <Box
-      component="form"
-      sx={{ "& .MuiTextField-root": { m: 3, width: "55ch" } }}
-      noValidate
-      autoComplete="off"
-    >
-      <CardContent>
-        <Typography variant="h5">Source Data Configuration</Typography>
-        <div>
+    <Box component="form" noValidate autoComplete="off" sx={{ flexGrow: 1 }}>
+      <Grid container spacing={3} sx={{ mb: 2, pb: 2 }}>
+        <Grid item xs={12}>
+          <Typography variant="h6">Source Data Configuration</Typography>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -27,11 +25,12 @@ const DataConfig = (props) => {
             name="aers.data.directory"
             value={props.publicDbData["aers.data.directory"]?.value}
             required
-            rows={1}
             size="small"
             type="text"
             variant="outlined"
           />
+        </Grid>
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -40,13 +39,13 @@ const DataConfig = (props) => {
             value={props.publicDbData["vaers.data.directory"]?.value}
             onChange={handleChange}
             required
-            rows={1}
             size="small"
             type="text"
             variant="outlined"
           />
-        </div>
-        <div>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -55,16 +54,18 @@ const DataConfig = (props) => {
             value={props.publicDbData["vigibase.data.directory"]?.value}
             onChange={handleChange}
             required
-            rows={1}
             size="small"
             type="text"
             variant="outlined"
           />
-        </div>
-      </CardContent>
-      <CardContent>
-        <Typography variant="h5">PMDA Details</Typography>
-        <div>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3} sx={{ mb: 2, pb: 2 }}>
+        <Grid item xs={12}>
+          <Typography variant="h6">PMDA Details</Typography>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -73,11 +74,12 @@ const DataConfig = (props) => {
             name="pmda.username"
             value={props.publicDbData["pmda.username"]?.value}
             required
-            rows={1}
             size="small"
             type="text"
             variant="outlined"
           />
+        </Grid>
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -86,13 +88,13 @@ const DataConfig = (props) => {
             name="pmda.password"
             value={props.publicDbData["pmda.password"]?.value}
             required
-            rows={1}
             size="small"
             type="password"
             variant="outlined"
           />
-        </div>
-        <div>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             color="primary"
             fullWidth
@@ -101,13 +103,12 @@ const DataConfig = (props) => {
             name="pmda.data.directory"
             value={props.publicDbData["pmda.data.directory"]?.value}
             required
-            rows={1}
             size="small"
             type="text"
             variant="outlined"
           />
-        </div>
-      </CardContent>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

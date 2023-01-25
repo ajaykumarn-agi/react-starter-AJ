@@ -34,14 +34,10 @@ export const General = ({ generalData, setToggle }) => {
     return values & generalData;
   };
 
-  useEffect(
-    () => {
-      setValues(generalData);
-      check();
-    },
-    [generalData],
-    check
-  );
+  useEffect(() => {
+    setValues(values);
+    check();
+  }, [values]);
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -50,7 +46,6 @@ export const General = ({ generalData, setToggle }) => {
       ...values,
       [name]: { ...values[name], value: value },
     });
-
     setIsValid(false);
   };
 
@@ -128,7 +123,7 @@ export const General = ({ generalData, setToggle }) => {
 
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            
             name="log.file"
             value={values["log.file"].value || ""}
             label="Log File Path"
@@ -140,7 +135,7 @@ export const General = ({ generalData, setToggle }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            
             name="max.log.file.size"
             value={values["max.log.file.size"].value || ""}
             label="Log File Size"
@@ -152,7 +147,7 @@ export const General = ({ generalData, setToggle }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+           
             name="session.expiration.duration"
             label="Expire Session"
             fullWidth
@@ -165,7 +160,7 @@ export const General = ({ generalData, setToggle }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+           
             name="web.help.base.url"
             value={values["web.help.base.url"].value || ""}
             label="Web Help Base URL"
@@ -190,7 +185,7 @@ export const General = ({ generalData, setToggle }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            
             name="doc.types"
             id="outlined-size-small"
             label="Document Types"
@@ -233,7 +228,7 @@ export const General = ({ generalData, setToggle }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            
             id="outlined-size-small"
             name="cache.global.relativepath"
             fullWidth
@@ -248,7 +243,7 @@ export const General = ({ generalData, setToggle }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            
             id="outlined-size-small"
             name="cache.maxelement.inmemory"
             fullWidth
@@ -263,7 +258,7 @@ export const General = ({ generalData, setToggle }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            
             id="outlined-size-small"
             name="cache.maxelement.indisk"
             fullWidth
@@ -278,7 +273,7 @@ export const General = ({ generalData, setToggle }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            
             id="outlined-size-small"
             name="cache.disk.persistance"
             value={values["cache.disk.persistance"].value || ""}
@@ -293,7 +288,7 @@ export const General = ({ generalData, setToggle }) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
+            
             id="outlined-size-small"
             name="cache.overflow.disk"
             fullWidth
@@ -309,7 +304,7 @@ export const General = ({ generalData, setToggle }) => {
         </Grid>
         <Grid item xs={12} sm={6} sx={{ mb: 1 }}>
           <TextField
-            required
+            
             id="outlined-size-small"
             name="cache.eternal"
             value={values["cache.eternal"].value || ""}
