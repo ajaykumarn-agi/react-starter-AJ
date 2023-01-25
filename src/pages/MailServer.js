@@ -47,11 +47,11 @@ const MailServer = ({ mailParams }) => {
   //   } catch (error) {
   //     setError(error.message);
   //   }
-  // }, []);
+  // }, []?);
 
   // useEffect(() => {
   //   fetchGeneralData();
-  // }, [fetchGeneralData]);
+  // }, [fetchGeneralData]?);
 
   const handleInputChange = (e) => {
     e.preventDefault();
@@ -126,7 +126,7 @@ const MailServer = ({ mailParams }) => {
           <TextField
             required
             name="notify.user.id"
-            value={values["notify.user.id"].value}
+            value={values["notify.user.id"]?.value}
             label="User Id"
             fullWidth
             variant="outlined"
@@ -139,7 +139,7 @@ const MailServer = ({ mailParams }) => {
             required
             type="Password"
             name="notify.from.pwd"
-            value={values["notify.from.pwd"].value}
+            value={values["notify.from.pwd"]?.value}
             label="Password"
             fullWidth
             variant="outlined"
@@ -152,7 +152,7 @@ const MailServer = ({ mailParams }) => {
           <TextField
             required
             name="notify.from.id"
-            value={values["notify.from.id"].value}
+            value={values["notify.from.id"]?.value}
             label="Email Address"
             fullWidth
             variant="outlined"
@@ -164,7 +164,7 @@ const MailServer = ({ mailParams }) => {
           <TextField
             required
             name="mail.smtp.socketFactory.port"
-            value={values["mail.smtp.socketFactory.port"].value}
+            value={values["mail.smtp.socketFactory.port"]?.value}
             label="Socket Factory Port"
             fullWidth
             variant="outlined"
@@ -176,7 +176,7 @@ const MailServer = ({ mailParams }) => {
           <TextField
             required
             name="sender.host"
-            value={values["sender.host"].value}
+            value={values["sender.host"]?.value}
             label="Host"
             fullWidth
             variant="outlined"
@@ -188,7 +188,7 @@ const MailServer = ({ mailParams }) => {
           <TextField
             required
             name="sender.port"
-            value={values["sender.port"].value}
+            value={values["sender.port"]?.value}
             label="Port"
             fullWidth
             variant="outlined"
@@ -205,11 +205,11 @@ const MailServer = ({ mailParams }) => {
               control={
                 <Checkbox
                   color="primary"
-                  checked={values["mail.smtp.auth"].value === "true"}
+                  checked={values["mail.smtp.auth"]?.value === "true"}
                   name="mail.smtp.auth"
                   onClick={handleInputChange}
                   size="medium"
-                  value={values["mail.smtp.auth"].value}
+                  value={values["mail.smtp.auth"]?.value}
                 />
               }
               label="Authentication Required"
@@ -220,11 +220,11 @@ const MailServer = ({ mailParams }) => {
               control={
                 <Checkbox
                   color="primary"
-                  checked={values["mail.smtp.starttls.enable"].value === "true"}
+                  checked={values["mail.smtp.starttls.enable"]?.value === "true"}
                   name="mail.smtp.starttls.enable"
                   onClick={handleInputChange}
                   size="medium"
-                  value={values["mail.smtp.starttls.enable"].value}
+                  value={values["mail.smtp.starttls.enable"]?.value}
                 />
               }
               label="Use TLS"

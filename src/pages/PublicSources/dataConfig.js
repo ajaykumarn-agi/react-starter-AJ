@@ -25,7 +25,7 @@ const DataConfig = (props) => {
             label="AERS Data Directory"
             onChange={handleChange}
             name="aers.data.directory"
-            value={props.publicDbData["aers.data.directory"].value}
+            value={props.publicDbData["aers.data.directory"]?.value}
             required
             rows={1}
             size="small"
@@ -37,7 +37,7 @@ const DataConfig = (props) => {
             fullWidth
             label="VAERS Data Directory"
             name="vaers.data.directory"
-            value={props.publicDbData["vaers.data.directory"].value}
+            value={props.publicDbData["vaers.data.directory"]?.value}
             onChange={handleChange}
             required
             rows={1}
@@ -52,7 +52,7 @@ const DataConfig = (props) => {
             fullWidth
             label="Vigibase Data Directory"
             name="vigibase.data.directory"
-            value={props.publicDbData["vigibase.data.directory"].value}
+            value={props.publicDbData["vigibase.data.directory"]?.value}
             onChange={handleChange}
             required
             rows={1}
@@ -71,7 +71,7 @@ const DataConfig = (props) => {
             label="PMDA Database Username"
             onChange={handleChange}
             name="pmda.username"
-            value={props.publicDbData["pmda.username"].value}
+            value={props.publicDbData["pmda.username"]?.value}
             required
             rows={1}
             size="small"
@@ -84,7 +84,7 @@ const DataConfig = (props) => {
             label="PMDA Database Password"
             onChange={handleChange}
             name="pmda.password"
-            value={props.publicDbData["pmda.password"].value}
+            value={props.publicDbData["pmda.password"]?.value}
             required
             rows={1}
             size="small"
@@ -99,7 +99,7 @@ const DataConfig = (props) => {
             label="PMDA Data Directory"
             onChange={handleChange}
             name="pmda.data.directory"
-            value={props.publicDbData["pmda.data.directory"].value}
+            value={props.publicDbData["pmda.data.directory"]?.value}
             required
             rows={1}
             size="small"

@@ -25,12 +25,15 @@ export const General = ({ generalData, setToggle }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
-  const [select, setSelect] = useState("ehcache");
   const [isValid, setIsValid] = useState(true);
+
+  let currentSelect = generalData["cache.type"].value;
+  const [select, setSelect] = useState(currentSelect);
 
   const check = () => {
     return values & generalData;
   };
+
   useEffect(
     () => {
       setValues(generalData);
@@ -59,6 +62,7 @@ export const General = ({ generalData, setToggle }) => {
       ...values,
       ["cache.type"]: { ...values["cache.type"], value: e.target.value },
     });
+    setIsValid(false);
   };
 
   const onSubmitHandler = async (e) => {

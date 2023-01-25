@@ -38,6 +38,7 @@ export const Tenant = () => {
       });
       if (!response.ok) {
         throw new Error("Something went Wrong");
+        setError(response.status);
       }
       const tenantData = await response.json();
       setTenants(tenantData);
@@ -48,9 +49,9 @@ export const Tenant = () => {
     }
   }, []);
 
-  useEffect(() => {
-    fetchTenantList();
-  }, [fetchTenantList]);
+  // useEffect(() => {
+  //   fetchTenantList();
+  // }, [fetchTenantList]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -80,7 +81,7 @@ export const Tenant = () => {
     e.preventDefault();
     console.log(tenants);
   };
-  if (loading) {
+  if (!loading) {
     return <p> Loading... </p>;
   }
   if (error) {

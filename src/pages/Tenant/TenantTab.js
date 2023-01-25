@@ -1,4 +1,4 @@
-import React , {useState} from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -13,7 +13,6 @@ import { useLocation } from "react-router-dom";
 
 const TenantTab = () => {
   const [value, setValue] = React.useState("1");
-  
 
   const location = useLocation();
   const values = location.states?.tenants;
@@ -21,12 +20,10 @@ const TenantTab = () => {
     setValue(newValue);
   };
 
-  const onSubmitHandler =(e)=>{
-    e.preventDefault()
-    console.log(values)
-  }
-
-
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(values);
+  };
 
   return (
     <Box
@@ -37,7 +34,7 @@ const TenantTab = () => {
         my: 8,
       }}
     >
-    <button onClick={onSubmitHandler} >Submit</button>
+      <button onClick={onSubmitHandler}>Submit</button>
       <TabContext value={value}>
         <Box
           sx={{

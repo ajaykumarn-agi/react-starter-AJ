@@ -27,7 +27,7 @@ const MongoConfig = (props) => {
             label="Host"
             name="mongo.host"
             onChange={handleChange}
-            value={props.publicDbData["mongo.host"].value}
+            value={props.publicDbData["mongo.host"]?.value}
             required
             rows={1}
             size="small"
@@ -41,7 +41,7 @@ const MongoConfig = (props) => {
             name="mongo.secondary.host"
             onChange={handleChange}
             required
-            value={props.publicDbData["mongo.secondary.host"].value}
+            value={props.publicDbData["mongo.secondary.host"]?.value}
             rows={1}
             size="small"
             type="text"
@@ -54,7 +54,7 @@ const MongoConfig = (props) => {
             fullWidth
             label="Port"
             name="mongo.port"
-            value={props.publicDbData["mongo.port"].value}
+            value={props.publicDbData["mongo.port"]?.value}
             onChange={handleChange}
             required
             rows={1}
@@ -67,7 +67,7 @@ const MongoConfig = (props) => {
             fullWidth
             label="User Name"
             name="mongo.username"
-            value={props.publicDbData["mongo.username"].value}
+            value={props.publicDbData["mongo.username"]?.value}
             onChange={handleChange}
             required
             rows={1}
@@ -84,7 +84,7 @@ const MongoConfig = (props) => {
             label="Password"
             onChange={handleChange}
             name="mongo.password"
-            value={props.publicDbData["mongo.password"].value}
+            value={props.publicDbData["mongo.password"]?.value}
             required
             rows={1}
             size="small"
@@ -96,7 +96,7 @@ const MongoConfig = (props) => {
             fullWidth
             label="Batch Size"
             name="mongo.batch.size"
-            value={props.publicDbData["mongo.batch.size"].value}
+            value={props.publicDbData["mongo.batch.size"]?.value}
             onChange={handleChange}
             required
             rows={1}
@@ -112,7 +112,7 @@ const MongoConfig = (props) => {
             label="AERS DB"
             onChange={handleChange}
             name="mongo.dbname.1002"
-            value={props.publicDbData["mongo.dbname.1002"].value}
+            value={props.publicDbData["mongo.dbname.1002"]?.value}
             required
             rows={1}
             size="small"
@@ -125,7 +125,7 @@ const MongoConfig = (props) => {
             label="AERS Default Suspect"
             onChange={handleChange}
             name="prodrole.suspect"
-            value={props.publicDbData["prodrole.suspect"].value}
+            value={props.publicDbData["prodrole.suspect"]?.value}
             required
             rows={1}
             size="small"
@@ -140,7 +140,7 @@ const MongoConfig = (props) => {
               control={
                 <Checkbox
                   name="exclude.dup.cases"
-                  checked={props.publicDbData["exclude.dup.cases"].value}
+                  checked={props.publicDbData["exclude.dup.cases"]?.value}
                   onClick={handleChange}
                 />
               }
@@ -151,7 +151,7 @@ const MongoConfig = (props) => {
               control={
                 <Checkbox
                   name="include.suspect.cases"
-                  checked={props.publicDbData["include.suspect.cases"].value}
+                  checked={props.publicDbData["include.suspect.cases"]?.value}
                   onClick={handleChange}
                 />
               }
@@ -169,7 +169,7 @@ const MongoConfig = (props) => {
             label="MAUDE DB"
             onChange={handleChange}
             name="mongo.dbname.1023"
-            value={props.publicDbData["mongo.dbname.1023"].value}
+            value={props.publicDbData["mongo.dbname.1023"]?.value}
             required
             rows={1}
             size="small"
@@ -182,7 +182,7 @@ const MongoConfig = (props) => {
             label="VAERS DB"
             onChange={handleChange}
             name="mongo.dbname.1003"
-            value={props.publicDbData["mongo.dbname.1003"].value}
+            value={props.publicDbData["mongo.dbname.1003"]?.value}
             required
             rows={1}
             size="small"
@@ -198,7 +198,7 @@ const MongoConfig = (props) => {
             onChange={handleChange}
             required
             name="mongo.dbname.1143"
-            value={props.publicDbData["mongo.dbname.1143"].value}
+            value={props.publicDbData["mongo.dbname.1143"]?.value}
             rows={1}
             size="small"
             type="text"
@@ -210,7 +210,7 @@ const MongoConfig = (props) => {
             label="Vigibase Default Suspect"
             onChange={handleChange}
             name="vigibase.prodrole.suspect"
-            value={props.publicDbData["vigibase.prodrole.suspect"].value}
+            value={props.publicDbData["vigibase.prodrole.suspect"]?.value}
             required
             rows={1}
             size="small"
@@ -225,7 +225,7 @@ const MongoConfig = (props) => {
                 <Checkbox
                   name="exclude.vigibase.dup.cases"
                   checked={
-                    props.publicDbData["exclude.vigibase.dup.cases"].value
+                    props.publicDbData["exclude.vigibase.dup.cases"]?.value
                   }
                   onClick={handleChange}
                 />
@@ -238,7 +238,7 @@ const MongoConfig = (props) => {
                 <Checkbox
                   name="include.vigibase.suspect.cases"
                   checked={
-                    props.publicDbData["include.vigibase.suspect.cases"].value
+                    props.publicDbData["include.vigibase.suspect.cases"]?.value
                   }
                   onClick={handleChange}
                 />
@@ -255,7 +255,7 @@ const MongoConfig = (props) => {
             label="PMDA DB"
             onChange={handleChange}
             name="mongo.dbname.1077"
-            value={props.publicDbData["mongo.dbname.1077"].value}
+            value={props.publicDbData["mongo.dbname.1077"]?.value}
             required
             rows={1}
             size="small"
