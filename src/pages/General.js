@@ -6,6 +6,7 @@ import {
   Button,
   Alert,
   Snackbar,
+  LoadingButton,
 } from "@arisglobal/agcp-ui";
 import "./styles/GeneralStyles.css";
 import constants from "../utils/constants";
@@ -21,11 +22,11 @@ const options = [
 
 export const General = ({ generalData, setToggle }) => {
   const [values, setValues] = useState(generalData);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [select, setSelect] = useState("ehcache");
   const [isValid, setIsValid] = useState(true);
- 
 
   const check = () => {
     return values & generalData;
@@ -59,8 +60,10 @@ export const General = ({ generalData, setToggle }) => {
       ["cache.type"]: { ...values["cache.type"], value: e.target.value },
     });
   };
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await fetch(`${constants.API_URL}/rest/saveParameters`, {
         method: "POST",
@@ -72,6 +75,7 @@ export const General = ({ generalData, setToggle }) => {
       }
       if (error === null) {
         setOpen(true);
+        setIsLoading(false);
       }
     } catch (err) {
       setError(err.message);
@@ -107,21 +111,22 @@ export const General = ({ generalData, setToggle }) => {
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          <Button
+          <LoadingButton
+            loading={isLoading}
             variant="contained"
             sx={{ textTransform: "capitalize", mb: 1 }}
             onClick={(e) => onSubmitHandler(e)}
             disabled={isValid}
           >
             Save
-          </Button>
+          </LoadingButton>
         </Grid>
 
         <Grid item xs={12} sm={6}>
           <TextField
             required
             name="log.file"
-            value={values["log.file"].value}
+            value={values["log.file"].value || ""}
             label="Log File Path"
             fullWidth
             variant="outlined"
@@ -133,7 +138,7 @@ export const General = ({ generalData, setToggle }) => {
           <TextField
             required
             name="max.log.file.size"
-            value={values["max.log.file.size"].value}
+            value={values["max.log.file.size"].value || ""}
             label="Log File Size"
             fullWidth
             variant="outlined"
@@ -147,7 +152,7 @@ export const General = ({ generalData, setToggle }) => {
             name="session.expiration.duration"
             label="Expire Session"
             fullWidth
-            value={values["session.expiration.duration"].value}
+            value={values["session.expiration.duration"].value || ""}
             autoComplete="given-name"
             variant="outlined"
             size="small"
@@ -158,12 +163,11 @@ export const General = ({ generalData, setToggle }) => {
           <TextField
             required
             name="web.help.base.url"
-            value={values['web.help.base.url']?.value}
+            value={values["web.help.base.url"].value || ""}
             label="Web Help Base URL"
             fullWidth
             variant="outlined"
             size="small"
-           
           />
         </Grid>
 
@@ -173,7 +177,7 @@ export const General = ({ generalData, setToggle }) => {
             name="doc.size"
             label="Document Size(MB)"
             fullWidth
-            value={values["doc.size"].value}
+            value={values["doc.size"].value || ""}
             autoComplete="given-name"
             variant="outlined"
             size="small"
@@ -187,7 +191,7 @@ export const General = ({ generalData, setToggle }) => {
             id="outlined-size-small"
             label="Document Types"
             fullWidth
-            value={values["doc.types"].value}
+            value={values["doc.types"].value || ""}
             autoComplete="given-name"
             variant="outlined"
             size="small"
@@ -229,7 +233,7 @@ export const General = ({ generalData, setToggle }) => {
             id="outlined-size-small"
             name="cache.global.relativepath"
             fullWidth
-            value={values["cache.global.relativepath"].value}
+            value={values["cache.global.relativepath"].value || ""}
             autoComplete="given-name"
             size="small"
             onChange={handleInputChange}
@@ -244,7 +248,7 @@ export const General = ({ generalData, setToggle }) => {
             id="outlined-size-small"
             name="cache.maxelement.inmemory"
             fullWidth
-            value={values["cache.maxelement.inmemory"].value}
+            value={values["cache.maxelement.inmemory"].value || ""}
             autoComplete="given-name"
             size="small"
             onChange={handleInputChange}
@@ -259,7 +263,7 @@ export const General = ({ generalData, setToggle }) => {
             id="outlined-size-small"
             name="cache.maxelement.indisk"
             fullWidth
-            value={values["cache.maxelement.indisk"].value}
+            value={values["cache.maxelement.indisk"].value || ""}
             autoComplete="given-name"
             size="small"
             onChange={handleInputChange}
@@ -273,7 +277,7 @@ export const General = ({ generalData, setToggle }) => {
             required
             id="outlined-size-small"
             name="cache.disk.persistance"
-            value={values["cache.disk.persistance"].value}
+            value={values["cache.disk.persistance"].value || ""}
             fullWidth
             autoComplete="given-name"
             size="small"
@@ -289,7 +293,7 @@ export const General = ({ generalData, setToggle }) => {
             id="outlined-size-small"
             name="cache.overflow.disk"
             fullWidth
-            value={values["cache.overflow.disk"].value}
+            value={values["cache.overflow.disk"].value || ""}
             autoComplete="given-name"
             size="small"
             onChange={handleInputChange}
@@ -304,7 +308,7 @@ export const General = ({ generalData, setToggle }) => {
             required
             id="outlined-size-small"
             name="cache.eternal"
-            value={values["cache.eternal"].value}
+            value={values["cache.eternal"].value || ""}
             fullWidth
             autoComplete="given-name"
             size="small"
