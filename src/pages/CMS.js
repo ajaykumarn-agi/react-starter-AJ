@@ -37,7 +37,7 @@ export const CMS = ({ cmsParams }) => {
   const fetchCmsParams = useCallback(async () => {
     setError(null);
     try {
-      const response = await fetch(`${constants.API_URL}/rest/getTemplate`, {
+      const response = await fetch(`/api/rest/getCmsTemp`, {
         headers: { "Content-Type": "application/json" },
       });
       if (!response.ok) {
@@ -68,7 +68,7 @@ export const CMS = ({ cmsParams }) => {
 
   const saveCmsParams = () => {
     try {
-      const response = fetch(`${constants.API_URL}/rest/saveParameters`, {
+      const response = fetch(`/api/rest/saveParameters`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
@@ -86,7 +86,7 @@ export const CMS = ({ cmsParams }) => {
   const saveTemplate = () => {
     setError(null);
     try {
-      const response = fetch(`${constants.API_URL}/rest/saveTemplate`, {
+      const response = fetch("/api/rest/saveTemplate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),

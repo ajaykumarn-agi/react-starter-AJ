@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   DataGrid,
   Button,
@@ -12,74 +12,79 @@ import {
   TableContainer,
   TablePagination,
   Paper,
-} from "@arisglobal/agcp-ui";
-import { Link } from "react-router-dom";
-import constants from "../utils/constants";
+} from '@arisglobal/agcp-ui';
+import {Link} from 'react-router-dom';
+import constants from '../utils/constants';
 
-import { Box, Grid, Typography } from "@mui/material";
+import {Box, Grid, Typography} from '@mui/material';
+
+const {format} = require ('date-fns');
 
 export const Tenant = () => {
-  const [open, setOpen] = useState(false);
-  const [error, setError] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [tenants, setTenants] = useState({});
-  const [parentData, setParentData] = useState({});
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(0);
+  const [open, setOpen] = useState (false);
+  const [error, setError] = useState (false);
+  const [loaded, setLoaded] = useState (false);
+  const [loading, setLoading] = useState (true);
+  const [modalIsOpen, setIsOpen] = useState (false);
+  const [tenants, setTenants] = useState ({});
+  const [parentData, setParentData] = useState ({});
+  const [rowsPerPage, setRowsPerPage] = useState (10);
+  const [page, setPage] = useState (0);
 
   // fetched tenant details
-  const fetchTenantList = useCallback(async () => {
-    setError(null);
+  const fetchTenantList = useCallback (async () => {
+    setError (null);
     try {
-      const response = await fetch(`${constants.API_URL}/rest/all`, {
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch ('/api/rest/getAllTenants', {
+        headers: {'Content-Type': 'application/json'},
       });
       if (!response.ok) {
-        throw new Error("Something went Wrong");
-        setError(response.status);
+        setError (response.status);
+        throw new Error ('Something went Wrong');
       }
-      const tenantData = await response.json();
-      setTenants(tenantData);
-      setLoading(false);
+      const tenantData = await response.json ();
+      setTenants (tenantData);
+      setLoading (false);
     } catch (error) {
-      setError(error.message);
-      setLoading(false);
+      setError (error.message);
+      setLoading (false);
     }
   }, []);
 
-  useEffect(() => {
-    fetchTenantList();
-  }, [fetchTenantList]);
+  useEffect (
+    () => {
+      fetchTenantList ();
+    },
+    [fetchTenantList]
+  );
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setPage (newPage);
   };
 
-  const getStripedStyle = (index) => {
-    return { background: index % 2 ? "#e1e1e1" : "white" };
+  const getStripedStyle = index => {
+    return {background: index % 2 ? '#e1e1e1' : 'white'};
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 1));
-    setPage(0);
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage (parseInt (event.target.value, 1));
+    setPage (0);
   };
 
   const handleClick = () => {
-    setOpen(true);
+    setOpen (true);
   };
   const handleClose = (event, reason) => {
-    event.preventDefault();
-    if (reason === "clickaway") {
+    event.preventDefault ();
+    if (reason === 'clickaway') {
       return;
     }
-    setOpen(false);
+    setOpen (false);
   };
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    console.log(tenants);
+  const onSubmitHandler = e => {
+    e.preventDefault ();
+    console.log (tenants);
   };
   if (loading) {
     return <p> Loading... </p>;
@@ -93,10 +98,10 @@ export const Tenant = () => {
         noValidate
         autoComplete="off"
         className="general-container"
-        sx={{ flexGrow: 1 }}
+        sx={{flexGrow: 1}}
         position="static"
       >
-        <Grid container spacing={3} sx={{ mb: 2, pb: 2 }}>
+        <Grid container spacing={3} sx={{mb: 2, pb: 2}}>
           <Grid item xs={12} sm={6}>
             <Typography>Tenant</Typography>
           </Grid>
@@ -110,21 +115,21 @@ export const Tenant = () => {
           >
             <Button
               variant="contained"
-              sx={{ textTransform: "capitalize", mb: 1, mx: 1 }}
-              onClick={(e) => onSubmitHandler(e)}
+              sx={{textTransform: 'capitalize', mb: 1, mx: 1}}
+              onClick={e => onSubmitHandler (e)}
             >
               <Link to="/tenant">Create</Link>
             </Button>
             <Button
               variant="outlined"
-              sx={{ textTransform: "capitalize", mb: 1, mx: 1 }}
-              onClick={(e) => onSubmitHandler(e)}
+              sx={{textTransform: 'capitalize', mb: 1, mx: 1}}
+              onClick={e => onSubmitHandler (e)}
             >
               <Link to="/">Close</Link>
             </Button>
           </Grid>
 
-          <Grid item xs={12} style={{ height: 500, width: "100%" }}>
+          <Grid item xs={12} style={{height: 500, width: '100%'}}>
             <TableContainer component={Paper}>
               <Table stickyHeader aria-label="simple table">
                 <TableHead>
@@ -138,27 +143,31 @@ export const Tenant = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {Object.entries(tenants).map(([key, row]) => (
+                  {Object.entries (tenants).map (([key, row]) => (
                     <TableRow
                       key={key}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                      sx={{'&:last-child td, &:last-child th': {border: 0}}}
                       style={{
-                        padding: "5px 20px",
+                        padding: '5px 20px',
                         height: 25,
-                        ...getStripedStyle(key),
+                        ...getStripedStyle (key),
                       }}
                     >
                       <TableCell component="th" scope="row">
-                        <Link to={{ pathname: "/tenant", state: tenants }}>
-                          {" "}
+                        <Link to={{pathname: '/tenant', state: tenants}}>
+                          {' '}
                           {row.tenantId}
                         </Link>
                       </TableCell>
                       <TableCell>{row.name}</TableCell>
                       <TableCell>{row.status}</TableCell>
                       <TableCell>{row.description}</TableCell>
-                      <TableCell>{row.createdOn}</TableCell>
-                      <TableCell>{row.lastModifiedOn}</TableCell>
+                      <TableCell>
+                        {format (row.createdOn, 'EEE MMM dd H:mm:s yyyy')}
+                      </TableCell>
+                      <TableCell>
+                        {format (row.lastModifiedOn, 'EEE MMM dd H:mm:s yyyy')}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

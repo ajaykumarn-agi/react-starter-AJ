@@ -1,14 +1,17 @@
-import * as React from "react";
+import React,{useState}  from "react";
 import { Box, Grid } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import CardContent from "@mui/material/CardContent";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Checkbox } from "@arisglobal/agcp-ui";
-import { GeneratedIdentifierFlags } from "typescript";
 
 const MongoConfig = (props) => {
+  
+
+ 
   const handleChange = (event) => {
+    
     props.parentMethod(event);
   };
 
@@ -134,7 +137,8 @@ const MongoConfig = (props) => {
               control={
                 <Checkbox
                   name="exclude.dup.cases"
-                  checked={props.publicDbData["exclude.dup.cases"]?.value}
+                                 checked={JSON.parse(props.publicDbData['exclude.dup.cases'].value)}
+
                   onClick={handleChange}
                 />
               }
@@ -145,7 +149,7 @@ const MongoConfig = (props) => {
               control={
                 <Checkbox
                   name="include.suspect.cases"
-                  checked={props.publicDbData["include.suspect.cases"]?.value}
+                  checked={JSON.parse(props.publicDbData['include.suspect.cases'].value)}
                   onClick={handleChange}
                 />
               }
@@ -217,7 +221,8 @@ const MongoConfig = (props) => {
                 <Checkbox
                   name="exclude.vigibase.dup.cases"
                   checked={
-                    props.publicDbData["exclude.vigibase.dup.cases"]?.value
+                    JSON.parse(props.publicDbData['exclude.vigibase.dup.cases'].value)
+
                   }
                   onClick={handleChange}
                 />
@@ -230,7 +235,7 @@ const MongoConfig = (props) => {
                 <Checkbox
                   name="include.vigibase.suspect.cases"
                   checked={
-                    props.publicDbData["include.vigibase.suspect.cases"]?.value
+                 JSON.parse(props.publicDbData['include.vigibase.suspect.cases'].value)
                   }
                   onClick={handleChange}
                 />

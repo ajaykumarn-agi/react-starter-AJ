@@ -1,9 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {
-  Grid,
-  Typography,
-  Box
-} from "@mui/material";
+import {Grid, Typography, Box} from '@mui/material';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -44,6 +40,7 @@ const initialValue = {
 
 const PublicSource = props => {
   const [value, setValue] = React.useState ('1');
+
   const handleChange = (event, newValue) => {
     setValue (newValue);
   };
@@ -63,9 +60,7 @@ const PublicSource = props => {
   const fetchGeneralData = useCallback (async () => {
     setError (null);
     try {
-      const response = await fetch (
-        'http://localhost:8080/agBalance-ConfigTool/servlet/rest/getParameters'
-      );
+      const response = await fetch ('/api/rest/getParameters');
       if (!response.ok) {
         throw new Error ('Something went Wrong');
       }
@@ -91,7 +86,6 @@ const PublicSource = props => {
     console.log (e.target.checked);
 
     if (e.target.type === 'checkbox') {
-      e.target.value = e.target.checked;
       const {name, checked} = e.target;
       setValues ({
         ...values,
@@ -111,14 +105,11 @@ const PublicSource = props => {
     e.preventDefault ();
     // console.log(values);
     try {
-      const response = await fetch (
-        'http://localhost:8080/agBalance-ConfigTool/servlet/rest/saveParameters',
-        {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify (values),
-        }
-      );
+      const response = await fetch ('/api/rest/saveParameters', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify (values),
+      });
       if (!response.ok) {
         throw new Error (response.statusText);
       }
@@ -132,17 +123,17 @@ const PublicSource = props => {
 
   return (
     <Box
-    component="form"
-    noValidate
-    autoComplete="off"
-    className="general-container"
-    sx={{ flexGrow: 1 }}
-  >
-    <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom>
-            Public Source
-          </Typography>
-        </Grid>
+      component="form"
+      noValidate
+      autoComplete="off"
+      className="general-container"
+      sx={{flexGrow: 1}}
+    >
+      <Grid item xs={12} sm={6}>
+        <Typography variant="h6" gutterBottom>
+          Public Source
+        </Typography>
+      </Grid>
       <div id="button">
         <ButtonGroup
           variant="contained"
@@ -152,7 +143,7 @@ const PublicSource = props => {
           <Button>cancel</Button>
         </ButtonGroup>
       </div>
-      
+
       <TabContext value={value}>
         <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
           <TabList onChange={handleChange} aria-label="public source tab">
