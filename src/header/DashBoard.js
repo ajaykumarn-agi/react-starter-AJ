@@ -16,7 +16,7 @@ import { Box, Typography, Toolbar } from "@mui/material";
 
 export const DashBoard = () => {
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="fixed" color="primary" sx={{mb: 4}}>
       <Toolbar variant="regular">
         <IconButton
           aria-label="menu"
@@ -32,9 +32,9 @@ export const DashBoard = () => {
             ml: 1,
           }}
         >
-          <img src="static/media/Vector.542557f441d498a1f63ff0619777c5f6.svg" />
+          <img src={logo} />
           <img
-            src="static/media/LifeSphere.5c8631d1a582633084ed2371a7f174a3.svg"
+          src={LifeSphere}
             style={{
               marginLeft: "10px",
             }}

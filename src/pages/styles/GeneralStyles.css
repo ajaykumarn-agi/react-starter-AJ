@@ -1,11 +1,29 @@
+.tabs-header{
+  background-color: white;
+  width: max-content;
+}
+
+
 .general-container {
+  width: 100%;
+  margin: 2rem auto;
+  border-radius: 10px;
+  background-color: rgb(250, 250, 250);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 1rem 2rem;
+  scrollbar-arrow-color: black;
+}
+
+.tab-container {
   width: 100%;
   margin: 0.5rem auto;
   border-radius: 10px;
   background-color: rgb(250, 250, 250);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   padding: 1rem 2rem;
+  scrollbar-arrow-color: black;
 }
+
 
 .MuiTypography-h6 {
   margin: 0.5rem auto;
@@ -33,4 +51,11 @@ textarea {
 .cellHeader{
     font-size: medium;
     font-weight: bold;
+}
+
+
+.tab-content{
+  width: max-content;
+  background-color: white;
+  opacity: 1;
 }

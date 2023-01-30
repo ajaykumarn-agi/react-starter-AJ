@@ -18,7 +18,7 @@ import {
 import constants from '../utils/constants';
 
 const PublicSource = ({props}) => {
-  const [value, setValue] = React.useState ('1');
+  const [value, setValue] = useState ('1');
   const [isLoading, setIsLoading] = useState (false);
   const [error, setError] = useState (null);
   const [open, setOpen] = useState (false);
@@ -57,7 +57,7 @@ const PublicSource = ({props}) => {
     e.preventDefault ();
     setIsLoading (true);
     try {
-      const response = await fetch (`/api/rest/saveParameters`, {
+      const response = await fetch (`/api/saveParameters`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify (values),

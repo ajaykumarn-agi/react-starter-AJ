@@ -1,31 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Grid, Typography, Box } from "@mui/material";
 import { TextField, Button } from "@arisglobal/agcp-ui";
-import "./styles/GeneralStyles.css";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import constants from "../utils/constants";
-
-const initialValue = {
-  "log.file": {
-    id: 0,
-    name: "",
-    type: 0,
-    paramId: "",
-    value: "",
-    groupType: 0,
-  },
-  "cms.username": { value: "" },
-  "cache.maxelement.inmemory": { value: "" },
-  "cms.password": { value: "" },
-  "cms.remote.workspace": { value: "" },
-  "doc.size": { value: "" },
-  "cache.global.relativepath": { value: "" },
-  "cache.eternal": { value: "" },
-  "cache.type": { value: "" },
-  "cache.disk.persistance": { value: "" },
-  "cache.overflow.disk": { value: "" },
-  "cache.maxelement.indisk": { value: "" },
-};
 
 export const CMS = ({ cmsParams }) => {
   const [error, setError] = useState(null);
@@ -37,7 +14,7 @@ export const CMS = ({ cmsParams }) => {
   const fetchCmsParams = useCallback(async () => {
     setError(null);
     try {
-      const response = await fetch(`/api/rest/getCmsTemp`, {
+      const response = await fetch(`/api/${constants.CMS_TEMP}`, {
         headers: { "Content-Type": "application/json" },
       });
       if (!response.ok) {
@@ -58,7 +35,7 @@ export const CMS = ({ cmsParams }) => {
 
   const handleInputChange = (e) => {
     e.preventDefault();
-    setError(null)
+    setError(null);
     const { name, value } = e.target;
     setValues({
       ...values,
@@ -68,7 +45,7 @@ export const CMS = ({ cmsParams }) => {
 
   const saveCmsParams = () => {
     try {
-      const response = fetch(`/api/rest/saveParameters`, {
+      const response = fetch(`/rest/saveParameters`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
@@ -83,23 +60,23 @@ export const CMS = ({ cmsParams }) => {
     }
   };
 
-  const saveTemplate = () => {
-    setError(null);
-    try {
-      const response = fetch("/api/rest/saveTemplate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      if (error === null) {
-      }
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  // const saveTemplate = () => {
+  //   setError(null);
+  //   try {
+  //     const response = fetch(`${constants.GET_TEMP}`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(values),
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error(response.statusText);
+  //     }
+  //     if (error === null) {
+  //     }
+  //   } catch (err) {
+  //     setError(err.message);
+  //   }
+  // };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -120,21 +97,13 @@ export const CMS = ({ cmsParams }) => {
     return <p> Loading ....</p>;
   }
   if (error) {
-    return <p> {error.message}</p>;
+    return <p> There is an Server Internal Error: {error}</p>;
   } else {
     return (
-      <Box
-        component="form"
-        noValidate
-        autoComplete="off"
-        className="general-container"
-        sx={{ flexGrow: 1 }}
-      >
+      <Box container className="general-container" sx={{ flexGrow: 1 }}>
         <Grid container spacing={3} sx={{ mb: 2, pb: 2 }}>
           <Grid item xs={12} sm={6}>
-            <Typography variant="h6" gutterBottom>
-              CMS
-            </Typography>
+            <Typography gutterBottom>CMS</Typography>
           </Grid>
           <Grid
             item
@@ -207,14 +176,13 @@ export const CMS = ({ cmsParams }) => {
 
           {/* To Do */}
           <Grid item xs={12}>
-          <h5>Configuration</h5>
+            <h5>Configuration</h5>
             <TextareaAutosize
               maxRows={15}
               aria-label="maximum height"
               name="2"
               value={template["2"].template}
               onChange={handleTemplateChange}
-              style={{ width: 800 }}
             />
           </Grid>
         </Grid>

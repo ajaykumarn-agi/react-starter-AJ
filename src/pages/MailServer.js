@@ -41,7 +41,7 @@ const MailServer = ({ mailParams }) => {
     setError(null);
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/rest/saveParameters`, {
+      const response = await fetch(`${process.env.REACT_APP_SAVE_PARAMS}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
@@ -91,7 +91,7 @@ const MailServer = ({ mailParams }) => {
             loading={isLoading}
             variant="contained"
             sx={{ textTransform: "capitalize", mb: 1 }}
-            onClick={(e) => onSubmitHandler(e)}
+            onClick={onSubmitHandler}
           >
             Save
           </LoadingButton>
@@ -179,7 +179,7 @@ const MailServer = ({ mailParams }) => {
               control={
                 <Checkbox
                   color="primary"
-                  checked={JSON.parse(values["mail.smtp.auth"]?.value)}
+                  checked={values["mail.smtp.auth"]?.value === "true"}
                   name="mail.smtp.auth"
                   onClick={handleInputChange}
                   size="medium"
@@ -195,12 +195,12 @@ const MailServer = ({ mailParams }) => {
                 <Checkbox
                   color="primary"
                   checked={
-                    JSON.parse(values["mail.smtp.starttls.enable"]?.value)
+                    values["mail.smtp.starttls.enable"]?.value === "true"
                   }
                   name="mail.smtp.starttls.enable"
                   onClick={handleInputChange}
                   size="medium"
-                  value={JSON.parse(values["mail.smtp.starttls.enable"]?.value)}
+                  value={values["mail.smtp.starttls.enable"]?.value}
                 />
               }
               label="Use TLS"
